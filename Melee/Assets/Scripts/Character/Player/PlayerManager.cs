@@ -4,8 +4,21 @@ using UnityEngine;
 
 namespace DS
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager : CharacterManager
     {
-        
+        PlayerLocomotionManager playerLocomotionManager;
+        protected override void Awake()
+        {
+            base.Awake();
+            playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            //Handle Movement
+            playerLocomotionManager.HandleAllMovement();
+        }
     }
 }
