@@ -12,10 +12,16 @@ namespace DS
         PlayerControls playerControls;
 
         [SerializeField] Vector2 movementInput;
+        public float verticalInput;
+        public float horizontalInput;
+        public float moveAmount;
 
         private void Awake()
         {
-          
+            if (instance == null)
+                instance = this;
+            else
+                Destroy(gameObject);
         }
 
         private void Start()
@@ -35,6 +41,25 @@ namespace DS
             playerControls.Enable();
         }
 
-       
+        private void Update()
+        {
+            HandleMovementInput();
+        }
+        private void HandleMovementInput()
+        {
+            verticalInput = movementInput.y;
+            horizontalInput = movementInput.x;
+
+            moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
+
+            if (moveAmount <= 0.5 && moveAmount > 0)
+            {
+                moveAmount = 0.5f;
+            }
+            else if (moveAmount > 0.5 && moveAmount <= 1)
+            {
+                moveAmount = 1f;
+            }
+        }
     }
 }
