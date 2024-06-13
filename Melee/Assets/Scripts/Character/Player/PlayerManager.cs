@@ -20,5 +20,12 @@ namespace DS
             //Handle Movement
             playerLocomotionManager.HandleAllMovement();
         }
+
+        protected override void LateUpdate()
+        {
+            base.LateUpdate();
+
+            PlayerCamera.instance.HandleAllCameraActions();
+        }
     }
 }

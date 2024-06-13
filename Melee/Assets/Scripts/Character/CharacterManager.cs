@@ -19,6 +19,11 @@ namespace DS
         {
 
         }
+
+        protected virtual void LateUpdate()
+        {
+            
+        }
     }
 }
 

@@ -33,8 +33,8 @@ namespace DS
 
         private void GetVerticalAndHorizontalInputs()
         {
-            verticalMovement = PlayerInputManger.instance.verticalInput;
-            horizontalMovement = PlayerInputManger.instance.horizontalInput;
+            verticalMovement = PlayerInputManager.instance.verticalInput;
+            horizontalMovement = PlayerInputManager.instance.horizontalInput;
 
         }
         private void HandleGroundedMovement()
@@ -46,11 +46,11 @@ namespace DS
             moveDirection.Normalize();
             moveDirection.y = 0;
 
-            if (PlayerInputManger.instance.moveAmount > 0.5f)
+            if (PlayerInputManager.instance.moveAmount > 0.5f)
             {
                 player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
             }
-            else if (PlayerInputManger.instance.moveAmount <= 0.5f)
+            else if (PlayerInputManager.instance.moveAmount <= 0.5f)
             {
                 player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
             }
