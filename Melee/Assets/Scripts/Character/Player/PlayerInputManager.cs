@@ -10,6 +10,7 @@ namespace DS
     {
         public static PlayerInputManager instance;
         PlayerControls playerControls;
+        public PlayerManager player;
 
         [Header("Movement Input")]
         [SerializeField] Vector2 movementInput;
@@ -67,6 +68,9 @@ namespace DS
             {
                 moveAmount = 1f;
             }
+
+            //This makes player only walk forward, not strafe. Only pass vertical value
+            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
         }
 
         private void HandleCameraInput()

@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6201a86c95f219499472efc419e2819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1997822750}
   movementInput: {x: 0, y: 0}
   verticalInput: 0
   horizontalInput: 0
@@ -838,6 +839,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae5f8252582d0a14b89b463d55ee5e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1997822754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997822748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc5dbf95a762d214890c6f8d5c3e3d12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &13227411328263474
 Transform:
   m_ObjectHideFlags: 0
@@ -870,6 +883,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7432944704972582974, guid: 2692e7430cf906b4c993e6187dd0319d, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 95db4c0210a70a1418a0b30b995f7d95, type: 3}
+    - target: {fileID: -7432944704972582974, guid: 2692e7430cf906b4c993e6187dd0319d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 62735459950374a44b6a9f0a2bdf7c8a, type: 2}
     - target: {fileID: -5119970799832206185, guid: 2692e7430cf906b4c993e6187dd0319d, type: 3}
       propertyPath: rotationSpeed
       value: 15
@@ -937,6 +958,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5587547990241362904, guid: 2692e7430cf906b4c993e6187dd0319d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1997822749}
+    - targetCorrespondingSourceObject: {fileID: 5587547990241362904, guid: 2692e7430cf906b4c993e6187dd0319d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1997822754}
   m_SourcePrefab: {fileID: 100100000, guid: 2692e7430cf906b4c993e6187dd0319d, type: 3}
 --- !u!114 &4770494823795187079
 MonoBehaviour:
@@ -953,9 +977,9 @@ MonoBehaviour:
   cameraObject: {fileID: 7141734844679189398}
   player: {fileID: 1997822750}
   cameraPivotTransform: {fileID: 7806315782498726725}
-  cameraSmoothSpeed: 1
-  upAndDownRotationSpeed: 200
-  leftAndRightRotationSpeed: 200
+  cameraSmoothSpeed: 10
+  upAndDownRotationSpeed: 75
+  leftAndRightRotationSpeed: 100
   minimumPivot: -30
   maximumPivot: 60
   cameraCollisionRadius: 0.2
@@ -1073,7 +1097,7 @@ Transform:
   m_GameObject: {fileID: 5024669970515819826}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: 0}
+  m_LocalPosition: {x: 0, y: 1.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
