@@ -22,6 +22,9 @@ namespace DS
         [SerializeField] Vector2 cameraInput;
         public float cameraVerticalInput;
         public float cameraHorizontalInput;
+
+        [Header("Player Actions")]
+        [SerializeField] bool dodgeInput = false;
         private void Awake()
         {
             if (instance == null)
@@ -43,6 +46,7 @@ namespace DS
 
                 playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 playerControls.PlayerCamera.CameraControls.performed += i => cameraInput = i.ReadValue<Vector2>();
+                playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
             }
 
             playerControls.Enable();
@@ -50,9 +54,17 @@ namespace DS
 
         private void Update()
         {
+            HandleAllInputs();
+        }
+
+        private void HandleAllInputs()
+        {
             HandleMovementInput();
             HandleCameraInput();
+            HandleDodgeInput();
         }
+
+        // MOVEMENT
         private void HandleMovementInput()
         {
             verticalInput = movementInput.y;
@@ -77,6 +89,20 @@ namespace DS
         {
             cameraVerticalInput = cameraInput.y;
             cameraHorizontalInput = cameraInput.x;
+        }
+
+
+        // ACTIONS
+        private void HandleDodgeInput()
+        {
+            if (dodgeInput)
+            {
+                dodgeInput = false;
+                
+                player.playerLocomotionManager.AttemptToPerformDodge();
+                
+
+            }
         }
     }
 }

@@ -82,7 +82,7 @@ namespace DS
 
             cameraRotation = Vector3.zero;
             cameraRotation.x = upAndDownLookAngle;
-            targetRotation = Quaternion.Euler(cameraRotation);
+            targetRotation = Quaternion.Euler(-cameraRotation);
             cameraPivotTransform.localRotation = targetRotation;
         }
 
