@@ -16,10 +16,16 @@ namespace DS
         private Vector3 targetRotationDirection;
         [SerializeField] float walkingSpeed = 2f;
         [SerializeField] float runningSpeed = 5f;
+        [SerializeField] float sprintingSpeed = 6.5f;
         [SerializeField] float rotationSpeed = 15f;
+        [SerializeField] int sprintingStaminaCost = 2;
 
         [Header("Dodge")]
         private Vector3 rollDirection;
+        [SerializeField] float dodgeStaminaCost = 25f;
+
+        [Header("Flags")]
+        public bool isSprinting = false;
         protected override void Awake()
         {
             base.Awake();
@@ -50,14 +56,22 @@ namespace DS
             moveDirection.Normalize();
             moveDirection.y = 0;
 
-            if (PlayerInputManager.instance.moveAmount > 0.5f)
+            if (isSprinting)
             {
-                player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+                player.characterController.Move(moveDirection * sprintingSpeed * Time.deltaTime);
             }
-            else if (PlayerInputManager.instance.moveAmount <= 0.5f)
+            else
             {
-                player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+                if (PlayerInputManager.instance.moveAmount > 0.5f)
+                {
+                    player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+                }
+                else if (PlayerInputManager.instance.moveAmount <= 0.5f)
+                {
+                    player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+                }
             }
+            
         }
 
         private void HandleRotation()
@@ -80,13 +94,44 @@ namespace DS
 
             transform.rotation = targetRotation;
         }
+        public void HandleSprinting()
+        {
+            if (player.isPerformingAction)
+            {
+                isSprinting = false;
+            }
 
+            if (player.playerStatsManager.CurrentStamina <= 0)
+            {
+                isSprinting = false;
+                return;
+            }
+
+            if (PlayerInputManager.instance.moveAmount >= 0.5f)
+            {
+                isSprinting = true;
+            }
+            else
+            {
+                isSprinting = false;
+            }
+
+            if (isSprinting)
+            {
+                player.playerStatsManager.CurrentStamina -= sprintingStaminaCost * Time.deltaTime;
+            }
+        }
         public void AttemptToPerformDodge()
         {
             
             if (player.isPerformingAction == true)
             {
                 Debug.Log("returned");
+                return;
+            }
+
+            if (player.playerStatsManager.CurrentStamina <= 0)
+            {
                 return;
             }
             if (PlayerInputManager.instance.moveAmount > 0)
@@ -102,6 +147,10 @@ namespace DS
                
                 player.playerAnimatorManager.PlayerTargetActionAnimation("RollForward", true);
             }
+
+            player.playerStatsManager.CurrentStamina -= dodgeStaminaCost;
         }
     }
+
+    
 }

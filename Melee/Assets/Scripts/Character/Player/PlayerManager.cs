@@ -8,11 +8,19 @@ namespace DS
     {
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
+        [HideInInspector] public PlayerStatsManager playerStatsManager;
+
+        
         protected override void Awake()
         {
             base.Awake();
+            playerStatsManager = GetComponent<PlayerStatsManager>();
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
             playerAnimatorManager = GetComponent <PlayerAnimatorManager>();
+            playerStatsManager.maxStamina = playerStatsManager.CalaculateStaminaBasedOnEnduranceLevel(playerStatsManager.endurance);
+            playerStatsManager.CurrentStamina = playerStatsManager.maxStamina;
+            PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
+
         }
 
         protected override void Update()
@@ -21,6 +29,8 @@ namespace DS
 
             //Handle Movement
             playerLocomotionManager.HandleAllMovement();
+
+            playerStatsManager.RegenerateStamina();
         }
 
         protected override void LateUpdate()
@@ -29,5 +39,7 @@ namespace DS
 
             PlayerCamera.instance.HandleAllCameraActions();
         }
+
+       
     }
 }
