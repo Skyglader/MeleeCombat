@@ -23,6 +23,7 @@ namespace DS
         [Header("Dodge")]
         private Vector3 rollDirection;
         [SerializeField] float dodgeStaminaCost = 25f;
+        [SerializeField] float jumpStaminaCost = 25f;
 
         [Header("Flags")]
         public bool isSprinting = false;
@@ -146,9 +147,45 @@ namespace DS
                 player.transform.rotation = playerRotation;
                
                 player.playerAnimatorManager.PlayerTargetActionAnimation("RollForward", true);
+
+                player.playerStatsManager.CurrentStamina -= dodgeStaminaCost;
             }
 
-            player.playerStatsManager.CurrentStamina -= dodgeStaminaCost;
+            
+        }
+
+        public void AttemptToPerformJump()
+        {
+            if (player.isPerformingAction == true)
+            {
+                Debug.Log("returned");
+                return;
+            }
+
+            if (player.playerStatsManager.CurrentStamina <= 0)
+            {
+                return;
+            }
+
+            if (player.isJumping)
+            {
+                return;
+            }
+
+            if (!player.isGrounded)
+            {
+                return;
+            }
+
+            player.playerAnimatorManager.PlayerTargetActionAnimation("StartJump", false);
+
+            player.isJumping = true;
+            player.playerStatsManager.CurrentStamina -= jumpStaminaCost;
+        }
+
+        public void ApplyJumpingVelocity()
+        {
+
         }
     }
 

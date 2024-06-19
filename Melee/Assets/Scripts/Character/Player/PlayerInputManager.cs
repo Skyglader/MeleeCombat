@@ -26,6 +26,7 @@ namespace DS
         [Header("Player Actions")]
         [SerializeField] bool dodgeInput = false;
         [SerializeField] bool sprintInput = false;
+        [SerializeField] bool jumpInput = false;
         private void Awake()
         {
             if (instance == null)
@@ -51,6 +52,8 @@ namespace DS
 
                 playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
                 playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
+
+                playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
             }
 
             playerControls.Enable();
@@ -66,7 +69,7 @@ namespace DS
             HandleMovementInput();
             HandleCameraInput();
             HandleDodgeInput();
-            HandleSprinting();
+            HandleSprintingInput();
         }
 
         // MOVEMENT
@@ -110,7 +113,7 @@ namespace DS
             }
         }
 
-        private void HandleSprinting()
+        private void HandleSprintingInput()
         {
             if (sprintInput)
             {
@@ -119,6 +122,16 @@ namespace DS
             else
             {
                 player.playerLocomotionManager.isSprinting = false;
+            }
+        }
+
+        private void HandleJumpInput()
+        {
+            if (jumpInput)
+            {
+                jumpInput = false;
+
+                player.playerLocomotionManager.AttemptToPerformJump();
             }
         }
     }

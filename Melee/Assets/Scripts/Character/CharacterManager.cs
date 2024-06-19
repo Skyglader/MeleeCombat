@@ -13,6 +13,8 @@ namespace DS
         [Header("Flags")]
         public bool isPerformingAction = false;
         public bool canRotate = true;
+        public bool isJumping = false;
+        public bool isGrounded = true;
         public bool canMove = true;
         public bool applyRootMotion = false;
         protected virtual void Awake()
@@ -25,7 +27,7 @@ namespace DS
 
         protected virtual void Update()
         {
-
+            animator.SetBool("IsGrounded", isGrounded);
         }
 
         protected virtual void LateUpdate()
