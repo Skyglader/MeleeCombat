@@ -20,6 +20,7 @@ namespace DS
             character.canRotate = true;
             character.canMove = true;
             character.applyRootMotion = false;
+            character.isJumping = false;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

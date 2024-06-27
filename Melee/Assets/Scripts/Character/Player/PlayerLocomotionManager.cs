@@ -14,6 +14,7 @@ namespace DS
         [Header("Movement Settings")]
         private Vector3 moveDirection;
         private Vector3 targetRotationDirection;
+        [SerializeField] float jumpHeight = 4;
         [SerializeField] float walkingSpeed = 2f;
         [SerializeField] float runningSpeed = 5f;
         [SerializeField] float sprintingSpeed = 6.5f;
@@ -177,6 +178,7 @@ namespace DS
                 return;
             }
 
+            Debug.Log("Jump executed");
             player.playerAnimatorManager.PlayerTargetActionAnimation("StartJump", false);
 
             player.isJumping = true;
@@ -185,7 +187,7 @@ namespace DS
 
         public void ApplyJumpingVelocity()
         {
-
+            yVelocity.y = Mathf.Sqrt(jumpHeight * -1 * gravityForce);
         }
     }
 

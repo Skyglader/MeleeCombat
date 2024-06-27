@@ -70,6 +70,7 @@ namespace DS
             HandleCameraInput();
             HandleDodgeInput();
             HandleSprintingInput();
+            HandleJumpInput();
         }
 
         // MOVEMENT
@@ -129,6 +130,7 @@ namespace DS
         {
             if (jumpInput)
             {
+                Debug.Log("e");
                 jumpInput = false;
 
                 player.playerLocomotionManager.AttemptToPerformJump();

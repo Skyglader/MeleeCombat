@@ -9,7 +9,7 @@ namespace DS
     {
         CharacterManager character;
         [Header("Ground Check & Jump")]
-        [SerializeField] float gravityForce = -5.55f;
+        [SerializeField] protected float gravityForce = -5.55f;
         [SerializeField] LayerMask groundLayer;
         [SerializeField] float groundCheckSphereRadius = 1;
         [SerializeField] protected Vector3 yVelocity;
@@ -58,9 +58,6 @@ namespace DS
            character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
        }
 
-        protected void OnDrawGizmosSelected()
-        {
-            Gizmos.DrawSphere(character.transform.position, groundCheckSphereRadius);
-        }
+       
     }
 }
