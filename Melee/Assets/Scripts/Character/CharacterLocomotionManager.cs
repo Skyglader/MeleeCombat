@@ -58,6 +58,9 @@ namespace DS
            character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
        }
 
-       
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawSphere(character.transform.position, groundCheckSphereRadius);
+        }
     }
 }

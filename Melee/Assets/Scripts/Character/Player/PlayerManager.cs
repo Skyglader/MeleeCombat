@@ -8,7 +8,7 @@ namespace DS
     {
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
-        [HideInInspector] public PlayerStatsManager playerStatsManager;
+        
 
         
         protected override void Awake()

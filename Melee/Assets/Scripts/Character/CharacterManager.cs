@@ -9,6 +9,7 @@ namespace DS
     {
         [HideInInspector] public CharacterController characterController;
         [HideInInspector] public Animator animator;
+        [HideInInspector] public PlayerStatsManager playerStatsManager;
 
         [Header("Flags")]
         public bool isPerformingAction = false;
@@ -34,6 +35,8 @@ namespace DS
         {
             
         }
+
+       
     }
 }
 

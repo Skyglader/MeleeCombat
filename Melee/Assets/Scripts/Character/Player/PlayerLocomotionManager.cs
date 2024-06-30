@@ -14,7 +14,7 @@ namespace DS
         [Header("Movement Settings")]
         private Vector3 moveDirection;
         private Vector3 targetRotationDirection;
-        [SerializeField] float jumpHeight = 4;
+        
         [SerializeField] float walkingSpeed = 2f;
         [SerializeField] float runningSpeed = 5f;
         [SerializeField] float sprintingSpeed = 6.5f;
@@ -24,7 +24,14 @@ namespace DS
         [Header("Dodge")]
         private Vector3 rollDirection;
         [SerializeField] float dodgeStaminaCost = 25f;
+        
+
+        [Header("Jump")]
+        [SerializeField] float jumpHeight = 4;
         [SerializeField] float jumpStaminaCost = 25f;
+        [SerializeField] float jumpForwardSpeed = 5;
+        [SerializeField] float freeFallSpeed = 2;
+        private Vector3 jumpDirection;
 
         [Header("Flags")]
         public bool isSprinting = false;
@@ -38,6 +45,8 @@ namespace DS
         {
             HandleGroundedMovement();
             HandleRotation();
+            HandleJumpingMovement();
+            HandleFreeFallMovement();
             //aerial movement
         }
 
@@ -76,6 +85,28 @@ namespace DS
             
         }
 
+        private void HandleJumpingMovement()
+        {
+            if (player.isJumping)
+            {
+                player.characterController.Move(jumpDirection * jumpForwardSpeed * Time.deltaTime);
+            }
+        }
+
+        private void HandleFreeFallMovement()
+        {
+            if (!player.isGrounded)
+            {
+                Vector3 freeFallDirection;
+
+                freeFallDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;
+                freeFallDirection += PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontalInput;
+
+                freeFallDirection.y = 0;
+
+                player.characterController.Move(freeFallDirection * freeFallSpeed * Time.deltaTime);
+            }
+        }
         private void HandleRotation()
         {
             if (!player.canRotate)
@@ -183,6 +214,28 @@ namespace DS
 
             player.isJumping = true;
             player.playerStatsManager.CurrentStamina -= jumpStaminaCost;
+
+            jumpDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;
+            jumpDirection += PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontalInput;
+
+            jumpDirection.y = 0;
+            if (jumpDirection != Vector3.zero)
+            {
+                if (isSprinting)
+                {
+                    jumpDirection *= 1;
+                }
+                else if (PlayerInputManager.instance.moveAmount > 0.5)
+                {
+                    jumpDirection *= 0.5f;
+                }
+                else if (PlayerInputManager.instance.moveAmount <= 0.5)
+                {
+                    jumpDirection *= 0.25f;
+                }
+            }
+            
+
         }
 
         public void ApplyJumpingVelocity()
