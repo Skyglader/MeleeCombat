@@ -134,6 +134,8 @@ namespace DS
                 jumpInput = false;
 
                 player.playerLocomotionManager.AttemptToPerformJump();
+
+                
             }
         }
     }

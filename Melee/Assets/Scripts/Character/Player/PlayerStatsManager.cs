@@ -10,6 +10,6 @@ namespace DS
    
     public class PlayerStatsManager : CharacterStatsManager
     {
-       
+        
     }
 }

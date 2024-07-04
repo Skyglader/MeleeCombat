@@ -7,8 +7,8 @@ namespace DS
     public class PlayerManager : CharacterManager
     {
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
-        [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
-        
+
+        [SerializeField] bool respawnCharacter = false;
 
         
         protected override void Awake()
@@ -16,10 +16,15 @@ namespace DS
             base.Awake();
             playerStatsManager = GetComponent<PlayerStatsManager>();
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
-            playerAnimatorManager = GetComponent <PlayerAnimatorManager>();
-            playerStatsManager.maxStamina = playerStatsManager.CalaculateStaminaBasedOnEnduranceLevel(playerStatsManager.endurance);
+            
+
+
+            playerStatsManager.maxStamina = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerStatsManager.Endurance);
+            playerStatsManager.maxHealth = playerStatsManager.CalculateHealthBasedOnVitalityLevel(playerStatsManager.Vitality);
             playerStatsManager.CurrentStamina = playerStatsManager.maxStamina;
+            playerStatsManager.CurrentHealth = playerStatsManager.maxHealth;
             PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
+            PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerStatsManager.maxHealth);
 
         }
 
@@ -31,6 +36,8 @@ namespace DS
             playerLocomotionManager.HandleAllMovement();
 
             playerStatsManager.RegenerateStamina();
+
+            DebugMenu();
         }
 
         protected override void LateUpdate()
@@ -40,6 +47,34 @@ namespace DS
             PlayerCamera.instance.HandleAllCameraActions();
         }
 
-       
+        public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+        {
+
+            PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
+            return base.ProcessDeathEvent(manuallySelectDeathAnimation);
+
+            
+        }
+
+        private void DebugMenu()
+        {
+            if (respawnCharacter)
+            {
+                respawnCharacter = false;
+                ReviveCharacter();
+                isDead = false;
+
+            }
+        }
+
+        public override void ReviveCharacter()
+        {
+            base.ReviveCharacter();
+
+            playerStatsManager.CurrentHealth = playerStatsManager.maxHealth;
+            playerStatsManager.CurrentStamina = playerStatsManager.maxStamina;
+
+            playerAnimatorManager.PlayerTargetActionAnimation("Empty", false);
+        }
     }
 }

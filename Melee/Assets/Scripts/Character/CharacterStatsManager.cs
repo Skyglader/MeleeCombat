@@ -9,9 +9,13 @@ namespace DS
         PlayerManager player;
         CharacterManager character;
         [Header("Stats")]
-        public int endurance = 1;
+        public int _endurance = 1;
         public float _currentStamina;
         public int maxStamina;
+
+        public int _vitality = 1;
+        public float _currentHealth;
+        public int maxHealth;
 
         [Header("Stamina Regeneration")]
         private float staminaRegenerationTimer = 0;
@@ -19,6 +23,43 @@ namespace DS
         [SerializeField] private float staminaRegenerationAmount = 2;
         [SerializeField] float staminaRegenerationDelay = 2f;
 
+
+        public int Endurance
+        {
+           get { return _endurance; }
+            set
+            {
+                _endurance = value;
+                maxStamina = CalculateStaminaBasedOnEnduranceLevel(_endurance);
+                PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(maxStamina);
+                PlayerUIManager.instance.playerUIHudManager.ResetBars();
+            }
+        }
+
+        public int Vitality
+        {
+            get { return _vitality; }
+            set
+            {
+                _vitality = value;
+                maxHealth = CalculateStaminaBasedOnEnduranceLevel(_vitality);
+                PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(maxHealth);
+                PlayerUIManager.instance.playerUIHudManager.ResetBars();
+            }
+        }
+        public float CurrentHealth
+        {
+            get { return _currentHealth; }
+            set
+            {
+                ResetStaminaRegenTimer(_currentHealth, value);
+                PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue(_currentHealth, value);
+
+                _currentHealth = value;
+
+                CheckHP();
+            }
+        }
         public float CurrentStamina
         {
             get { return _currentStamina; }
@@ -36,7 +77,20 @@ namespace DS
             player = GetComponent<PlayerManager>();
 
         }
-        public int CalaculateStaminaBasedOnEnduranceLevel(int endurance)
+
+        public void CheckHP()
+        {
+            if (CurrentHealth <= 0)
+            {
+                StartCoroutine(character.ProcessDeathEvent());
+            }
+
+            if (_currentHealth > maxHealth)
+            {
+                _currentHealth = maxHealth;
+            }
+        }
+        public int CalculateStaminaBasedOnEnduranceLevel(int endurance)
         {
             float stamina = 0;
 
@@ -75,7 +129,18 @@ namespace DS
             if (newValue < oldValue)
                 staminaRegenerationTimer = 0;
         }
+
+        public int CalculateHealthBasedOnVitalityLevel(int vitality)
+        {
+            float health = 0;
+
+            health = vitality * 10;
+
+            return Mathf.RoundToInt(health);
+        }
     }
 
+
    
+
 }

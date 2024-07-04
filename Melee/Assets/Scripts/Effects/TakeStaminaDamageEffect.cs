@@ -19,5 +19,9 @@ namespace DS
         {
             character.playerStatsManager.CurrentStamina -= staminaDamage;
         }
+
+       
+
+    
     }
 }

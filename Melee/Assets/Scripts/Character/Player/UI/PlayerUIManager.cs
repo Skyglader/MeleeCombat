@@ -11,6 +11,7 @@ namespace DS
     {
         public static PlayerUIManager instance;
         [HideInInspector] public PlayerUIHudManager playerUIHudManager;
+        [HideInInspector] public PlayerUIPopUpManager playerUIPopUpManager;
 
         private void Awake()
         {
@@ -20,6 +21,7 @@ namespace DS
                 Destroy(gameObject);
 
             playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
+            playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
         }
 
 
