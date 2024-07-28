@@ -7,7 +7,11 @@ namespace DS
     public class PlayerManager : CharacterManager
     {
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
+        [HideInInspector] public PlayerInventoryManager playerInventoryManager;
+        [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
 
+        [Header("Debug")]
+        [SerializeField] bool switchRightWeapon = false;
         [SerializeField] bool respawnCharacter = false;
 
         
@@ -25,6 +29,8 @@ namespace DS
             playerStatsManager.CurrentHealth = playerStatsManager.maxHealth;
             PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
             PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerStatsManager.maxHealth);
+            playerInventoryManager = GetComponent<PlayerInventoryManager>();
+            playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
 
         }
 
@@ -64,6 +70,12 @@ namespace DS
                 ReviveCharacter();
                 isDead = false;
 
+            }
+
+            if (switchRightWeapon)
+            {
+                switchRightWeapon = false;
+                playerEquipmentManager.SwitchRightWeapon();
             }
         }
 

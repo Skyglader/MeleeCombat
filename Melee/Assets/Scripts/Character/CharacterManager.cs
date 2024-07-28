@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -29,6 +30,11 @@ namespace DS
             characterEffectsManager = GetComponent<CharacterEffectsManager>();
             playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
             animator = GetComponent<Animator>();
+        }
+
+        protected virtual void Start()
+        {
+            IgnoreMyOwnColliders();
         }
 
         protected virtual void Update()
@@ -64,6 +70,30 @@ namespace DS
 
         }
 
+        protected virtual void IgnoreMyOwnColliders()
+        {
+            Collider characterControllerCollider = GetComponent<Collider>();
+            Collider[] damageableCharacterColliders = GetComponentsInChildren<Collider>();
+
+            List<Collider> ignoreColliders = new List<Collider>();
+
+            foreach (var collider in damageableCharacterColliders)
+            {
+                ignoreColliders.Add(collider);
+            }
+
+            ignoreColliders.Add(characterControllerCollider);
+
+            // ignore every collider in character
+
+            foreach ( var collider in ignoreColliders)
+            {
+                foreach (var otherCollider in ignoreColliders)
+                {
+                    Physics.IgnoreCollision(collider, otherCollider, true);
+                }
+            }
+        }
        
     }
 }

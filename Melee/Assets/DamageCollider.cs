@@ -10,7 +10,8 @@ namespace DS
 
     public class DamageCollider : MonoBehaviour
     {
-
+        [Header("Collider")]
+        protected Collider damageCollider;
         
         [Header("Damage")]
         public float physicalDamage = 0;
@@ -24,7 +25,7 @@ namespace DS
         private void OnTriggerEnter(Collider other)
         {
 
-            CharacterManager character = other.GetComponent<CharacterManager>();
+            CharacterManager character = other.GetComponentInParent<CharacterManager>();
             if (character != null)
             {
                 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
@@ -44,8 +45,19 @@ namespace DS
 
             damageTarget.characterEffectsManager.ProcessInstantCharacterEffect(damageEffect);
             Debug.Log("Damage");
-            charactersDamaged.Remove(damageTarget);
+            
             
         }
+
+        public virtual void EnableDamageCollider()
+        {
+            damageCollider.enabled = true;
+        }
+        public virtual void DisableDamageCollider()
+        {
+            damageCollider.enabled = false;
+            charactersDamaged.Clear();
+        }
+
     }
 }
