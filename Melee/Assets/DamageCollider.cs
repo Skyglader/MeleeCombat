@@ -24,14 +24,16 @@ namespace DS
         protected List<CharacterManager> charactersDamaged = new List<CharacterManager>();
         private void OnTriggerEnter(Collider other)
         {
-
+         
             CharacterManager character = other.GetComponentInParent<CharacterManager>();
             if (character != null)
             {
                 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 
                 DamageTarget(character);
+                Debug.Log("Contact:" + other.gameObject.name);
             }
+            Debug.Log("Detected" + other.gameObject.name);
         }
 
         protected virtual void DamageTarget(CharacterManager damageTarget)
@@ -44,7 +46,7 @@ namespace DS
             damageEffect.magicDamage = magicDamage;
 
             damageTarget.characterEffectsManager.ProcessInstantCharacterEffect(damageEffect);
-            Debug.Log("Damage");
+            Debug.Log("Damaged:" + damageTarget.gameObject.transform.name);
             
             
         }
