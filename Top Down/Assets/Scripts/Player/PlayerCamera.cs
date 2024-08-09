@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,11 @@ public class PlayerCamera : MonoBehaviour
     {
         cam = gameObject.GetComponentInChildren<Camera>();
         cam.orthographicSize = distance;
+    }
+
+    private void Start()
+    {
+        CameraShake.instance.mCam.m_Lens.OrthographicSize = distance;
     }
 
     private void LateUpdate()

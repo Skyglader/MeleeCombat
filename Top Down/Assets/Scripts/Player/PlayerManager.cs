@@ -2,21 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : CharacterManager
 {
     public PlayerLocomotionManager playerLocomotionManager;
     public PlayerCamera playerCamera;
     public PlayerInputManager playerInputManager;
-    public Rigidbody2D rb;
+    public PlayerStatsManager playerStatsManager;
+    
 
     private void Awake()
     {
+        playerStatsManager = GetComponent<PlayerStatsManager>();
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+        playerInputManager = GetComponent<PlayerInputManager>();
+        rb = GetComponent<Rigidbody2D>();
+        statsManager = GetComponent<PlayerStatsManager>();
+        animationManager = GetComponent<CharacterAnimationManager>();
+        characterCollider = GetComponent<Collider2D>();
     }
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        playerInputManager = GetComponent<PlayerInputManager>();
+        
         playerCamera = GameObject.Find("CameraHolder").GetComponent<PlayerCamera>();
     }
 }

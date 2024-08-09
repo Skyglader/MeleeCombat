@@ -11,6 +11,9 @@ public class PlayerInputManager : MonoBehaviour
 
     public static PlayerInputManager instance;
 
+    [Header("Button Inputs")]
+    public bool isShooting = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -25,7 +28,8 @@ public class PlayerInputManager : MonoBehaviour
             playerControls = new PlayerControls();
 
             playerControls.PlayerMovement.Movement.performed += i => movement = i.ReadValue<Vector2>();
-            
+            playerControls.PlayerActions.Shoot.performed += i => isShooting = true;
+            playerControls.PlayerActions.Shoot.canceled += i => isShooting = false;
         }
         playerControls.Enable();
     }
@@ -35,4 +39,6 @@ public class PlayerInputManager : MonoBehaviour
         movementDir = movement.normalized;
         return movementDir;
     }
+
+    
 }
