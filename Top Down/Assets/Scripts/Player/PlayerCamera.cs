@@ -17,6 +17,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
+        
         CameraShake.instance.mCam.m_Lens.OrthographicSize = distance;
     }
 

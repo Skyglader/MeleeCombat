@@ -11,6 +11,10 @@ public class ChildtoParentScript : MonoBehaviour
         character = GetComponentInParent<CharacterManager>();
     }
 
+    private void Start()
+    {
+        
+    }
     public void ChangeCharacterColliderState(int activate)
     {
         if (activate == 1)
@@ -21,5 +25,10 @@ public class ChildtoParentScript : MonoBehaviour
         {
             character.DisableCollider();
         }
+    }
+
+    public void DestroyGameObject()
+    {
+        character.DestroyCharacter();
     }
 }

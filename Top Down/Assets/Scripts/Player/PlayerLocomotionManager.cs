@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -14,13 +13,15 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] float rotateSpeed;
     [SerializeField] float decelerationSpeed;
     
-    private void Awake()
+    public override void Awake()
     {
+       base.Awake();
        player = GetComponent<PlayerManager>();
     }
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
         HandleRotations();
         
     }
@@ -36,6 +37,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         {
             return;
         }
+        Debug.Log("Rotating");
         Vector3 mousePos = Input.mousePosition;
         Vector3 worldMousePos = player.playerCamera.cam.ScreenToWorldPoint(mousePos);
         Vector2 direction = new Vector2(worldMousePos.x - transform.position.x, worldMousePos.y - transform.position.y);

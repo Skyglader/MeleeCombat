@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   vitality: 8
-  dmgLVL: 1
+  dmgLVL: 4
+  fireRate: 10

@@ -15,7 +15,7 @@ public class PlayerStatsManager : CharacterStatsManager
     public override void Start()
     {
         base.Start();
-        onPlayerDeath += StopAllPlayerMovement;
+        onCharacterDeath += StopAllPlayerMovement;
     }
 
     private void StopAllPlayerMovement(object sender, EventArgs e)
@@ -24,6 +24,7 @@ public class PlayerStatsManager : CharacterStatsManager
             return;
 
         player.playerLocomotionManager.canMove = false;
+        player.playerCombatManager.stopShooting = true;
 
     }
 
@@ -31,7 +32,7 @@ public class PlayerStatsManager : CharacterStatsManager
     {
         base.DamageTarget(damage);
 
-        CameraShake.instance.ShakeCamera(3, 0.2f);
+        CameraShake.instance.ShakeCamera(5, 0.2f);
     }
 
 

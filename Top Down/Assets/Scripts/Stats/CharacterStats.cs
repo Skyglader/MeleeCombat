@@ -8,4 +8,5 @@ public class CharacterStats : Stats
     [Header("Health")]
     public int vitality;
     public int dmgLVL;
+    public int fireRate;
 }

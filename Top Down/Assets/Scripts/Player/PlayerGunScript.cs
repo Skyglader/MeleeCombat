@@ -9,6 +9,7 @@ public class PlayerGunScript : MonoBehaviour
     public CharacterManager player;
     public float dmgPerLevel = 2f;
     public PlayerCombatManager playerCombatManager;
+
     private void Awake()
     {
         player = GetComponentInParent<CharacterManager>();
@@ -16,12 +17,13 @@ public class PlayerGunScript : MonoBehaviour
     }
     private void Start()
     {
+       
         playerCombatManager.OnShootPressed.AddListener(ShootBullet);
+        
     }
 
     private void ShootBullet()
     {
-        Debug.Log("Called");
         // get bullet prefab from Bullet_WeaponItem
         // instantiate(bullet) and set damage
         GameObject bullet = Instantiate(gun.bulletPrefab, transform.position, player.transform.rotation);

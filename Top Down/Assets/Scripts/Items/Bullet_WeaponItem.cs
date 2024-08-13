@@ -7,5 +7,6 @@ public class Bullet_WeaponItem : WeaponItem
 {
     public GameObject bulletPrefab;
     public GameObject impactPrefab;
+    public float moveSpeed;
     
 }

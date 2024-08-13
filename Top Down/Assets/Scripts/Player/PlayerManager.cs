@@ -8,10 +8,12 @@ public class PlayerManager : CharacterManager
     public PlayerCamera playerCamera;
     public PlayerInputManager playerInputManager;
     public PlayerStatsManager playerStatsManager;
+    public PlayerCombatManager playerCombatManager;
     
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         playerStatsManager = GetComponent<PlayerStatsManager>();
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
         playerInputManager = GetComponent<PlayerInputManager>();
@@ -19,10 +21,12 @@ public class PlayerManager : CharacterManager
         statsManager = GetComponent<PlayerStatsManager>();
         animationManager = GetComponent<CharacterAnimationManager>();
         characterCollider = GetComponent<Collider2D>();
-    }
-    private void Start()
-    {
+        playerCombatManager = GetComponent<PlayerCombatManager>();
         
+    }
+    public override void Start()
+    {
+        base.Start();
         playerCamera = GameObject.Find("CameraHolder").GetComponent<PlayerCamera>();
     }
 }
